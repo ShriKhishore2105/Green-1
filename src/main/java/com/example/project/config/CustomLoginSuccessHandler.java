@@ -17,7 +17,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 public void onAuthenticationSuccess(HttpServletRequest request,HttpServletResponse response,Authentication authentication)throws IOException,ServletException{
 	for(GrantedAuthority auth:authentication.getAuthorities()) {
 		if(auth.getAuthority().equals("ROLE_ADMIN")) {
-			response.sendRedirect("/admin/product/add");
+			response.sendRedirect("/admin/dashboard");
 			return;
 		}
 	}

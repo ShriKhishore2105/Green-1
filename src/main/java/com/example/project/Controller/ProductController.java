@@ -1,5 +1,5 @@
 package com.example.project.Controller;
-
+import com.example.project.Controller.HomeController ;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.project.model.Product;
+import com.example.project.service.CategoryService;
 import com.example.project.service.ProductService;
 import jakarta.validation.Valid;
 
@@ -33,8 +34,10 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	 @Autowired
+	 private CategoryService categoryService;
 	
-	private  String uploadDir="C:/stock images";
+	private  String uploadDir="C:/Users/2400570/Downloads/imgs/";
 	
 	@GetMapping("/all")
 	public ModelAndView getAllProducts() {
@@ -46,9 +49,10 @@ public class ProductController {
 	
 	@GetMapping("/add")
 	public String getAddForm(Model model) {
-		System.out.print("get calleff");
+		
 		Product product=new Product();
 		model.addAttribute("productFormObj", product);
+		model.addAttribute("categories",categoryService.getCategoryMap().entrySet());
 		return "addProduct";
 	}
 	
@@ -80,14 +84,17 @@ public class ProductController {
 	
 	@GetMapping("/edit/{productId}")
 	public ModelAndView getEditForm(@PathVariable Integer productId) {
-		Optional<Product> product=productService.getProductDetails(productId);
-		
-		Product p=product.get();
-		System.out.println("id"+p.getProductId());
-		
-		
-		return new ModelAndView("editProduct","editProductObj",p);
-		
+	    Optional<Product> productOpt = productService.getProductDetails(productId);
+	    
+	    if (productOpt.isPresent()) {
+	        Product product = productOpt.get();
+	        ModelAndView mav = new ModelAndView("editProduct");
+	        mav.addObject("editProductObj", product);
+	        mav.addObject("categories", categoryService.getCategoryMap().entrySet()); // add categories
+	        return mav;
+	    }
+
+	    return new ModelAndView("redirect:/admin/product/all");
 	}
 	
 	@PostMapping("/edit")

@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/products").hasRole("CUSTOMER")
 .requestMatchers("/product/**").permitAll()
-                        .requestMatchers("/admin/product/add", "/admin/product/all", "/admin/product/edit/**", "/admin/product/delete/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").successHandler(successHandler).permitAll()).exceptionHandling(ex->ex.accessDeniedPage("/access-denied"))
                 .build();
