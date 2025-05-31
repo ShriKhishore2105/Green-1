@@ -3,382 +3,569 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Your Account</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <title>Create Account - Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Define CSS Variables for easy color management */
         :root {
-            --bg-color: #E6E6FA; /* Light Lavender */
-            --pop-up-bg-color: #FFFFFF; /* Pure White */
-            --primary-text-color: #5D3FD3; /* Dark Lavender for general text on pop-up */
-            --secondary-text-color: #B0C4DE; /* Light Steel Blue for muted elements/placeholders */
-            --link-color: #8A2BE2; /* Blue Violet for links */
-            --success-color: #4CAF50;
-            --error-color: #D32F2F;
-            --border-color: #E0E0E0; /* Light grey border for inputs */
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary-color: #64748b;
+            --success-color: #059669;
+            --error-color: #dc2626;
+            --warning-color: #d97706;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-focus: #3b82f6;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Open Sans', sans-serif; /* Body font */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            background-color: var(--bg-color); /* Plain light lavender background */
-            color: var(--primary-text-color); /* Default text color for the body (overridden by container) */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            line-height: 1.6;
+            position: relative;
+            background: #f0f9ff;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 99, 132, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(54, 162, 235, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f4ff 100%);
+            animation: float 20s ease-in-out infinite;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+            background-size: 50px 50px, 80px 80px;
+            opacity: 0.4;
+            z-index: -1;
+            animation: drift 30s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(1deg); }
+            66% { transform: translateY(5px) rotate(-1deg); }
+        }
+
+        @keyframes drift {
+            0% { transform: translateX(0px); }
+            100% { transform: translateX(50px); }
         }
 
         .container {
-            background-color: var(--pop-up-bg-color); /* Pure White background for the form */
-            padding: 25px; /* Even more reduced padding */
-            border-radius: 12px; /* Consistent rounded corners */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            width: 350px; /* Even smaller fixed width */
-            max-width: 90%; /* Responsive max width */
-            height: fit-content;
-            text-align: left; /* Ensure text inside is left-aligned */
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow:
+                0 20px 25px -5px rgb(0 0 0 / 0.1),
+                0 10px 10px -5px rgb(0 0 0 / 0.04),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        h2 {
-            font-family: 'Poppins', sans-serif; /* Poppins for headings */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+        }
+
+        .header {
             text-align: center;
-            margin-bottom: 25px;
-            color: var(--primary-text-color); /* Dark Lavender heading on white pop-up */
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.875rem;
             font-weight: 700;
-            font-size: 2.1em; /* Slightly smaller heading */
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -0.025em;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin: 0;
         }
 
         .form-group {
-            margin-bottom: 15px; /* Reduced spacing between form groups */
+            margin-bottom: 1.5rem;
         }
+
+        .form-group:last-of-type {
+            margin-bottom: 2rem;
+        }
+
         label {
-            font-family: 'Open Sans', sans-serif; /* Open Sans for labels */
-            font-weight: 600;
             display: block;
-            margin-bottom: 5px; /* Reduced space below label */
-            color: var(--primary-text-color); /* Dark Lavender label on white pop-up */
-            font-size: 0.9em;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
         }
+
+        .input-wrapper {
+            position: relative;
+        }
+
         .form-control {
-            font-family: 'Open Sans', sans-serif; /* Open Sans for input text */
             width: 100%;
-            height: 42px; /* Slightly smaller input height */
-            padding: 10px 14px;
+            padding: 0.75rem 1rem;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            box-sizing: border-box;
-            background-color: #F8F8F8; /* Very light grey input field for subtle contrast */
-            color: var(--primary-text-color); /* Dark Lavender text inside input */
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .form-control::placeholder {
-            color: var(--secondary-text-color); /* Light Steel Blue placeholder text */
-        }
-        .form-control:focus {
-            border-color: var(--primary-text-color); /* Dark Lavender border on focus */
-            box-shadow: 0 0 0 0.2rem rgba(93, 63, 211, 0.4); /* Dark Lavender focus ring */
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
             outline: none;
         }
-        .form-control.error {
-            border-color: var(--error-color);
-            box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25);
+
+        .form-control::placeholder {
+            color: var(--text-muted);
         }
+
+        .form-control:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
         .form-control.success {
             border-color: var(--success-color);
-            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+            background-image: url("data:image/svg+xml,%3csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m13.854 3.646-7.5 7.5L2.646 7.439a.5.5 0 1 0-.708.708l4 4a.5.5 0 0 0 .708 0l8-8a.5.5 0 0 0-.708-.708z' fill='%23059669'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
         }
-        .btn-primary {
-            font-family: 'Poppins', sans-serif; /* Poppins for buttons */
-            background-color: var(--primary-text-color); /* Dark Lavender button */
-            color: var(--pop-up-bg-color); /* White text on lavender button */
-            border: none;
-            margin-top: 20px;
-            padding: 10px 22px; /* Slightly adjusted padding */
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.05em; /* Slightly adjusted font size */
-            font-weight: 700;
-            transition: background-color 0.3s, transform 0.2s;
+
+        .form-control.error {
+            border-color: var(--error-color);
+            background-image: url("data:image/svg+xml,%3csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zM8 4a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 1 0v-3A.5.5 0 0 0 8 4zm0 8a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z' fill='%23dc2626'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
         }
-        .btn-primary:hover:not(:disabled) {
-            background-color: #6A4DB8; /* Slightly darker lavender on hover */
-            transform: translateY(-2px);
+
+        .help-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
         }
-        .btn-primary:disabled {
-            background-color: var(--secondary-text-color); /* Muted grey for disabled state */
-            color: rgba(255, 255, 255, 0.7);
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        p {
-            margin-top: 20px;
-            text-align: center;
-            color: var(--primary-text-color); /* Dark Lavender text on white pop-up */
-            font-size: 0.85em;
-        }
-        a {
-            color: var(--link-color); /* Blue Violet for links */
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        a:hover {
-            text-decoration: underline;
-            color: #AF7AC5; /* Slightly lighter violet on hover */
-        }
-        .error-message {
-            color: var(--primary-text-color); /* Dark Lavender for error messages */
-            font-size: 0.78em;
-            margin-top: 4px;
-            display: none;
-            font-weight: 600;
-            background-color: rgba(230, 230, 250, 0.5); /* Semi-transparent light lavender background */
-            padding: 3px 8px;
-            border-radius: 4px;
-        }
-        .success-message {
-            color: var(--primary-text-color); /* Dark Lavender for success messages */
-            font-size: 0.78em;
-            margin-top: 4px;
-            display: none;
-            font-weight: 600;
-            background-color: rgba(230, 230, 250, 0.5); /* Semi-transparent light lavender background */
-            padding: 3px 8px;
-            border-radius: 4px;
-        }
+
         .password-requirements {
-            font-size: 0.7em; /* Smallest font for requirements */
-            margin-top: 6px;
-            color: var(--secondary-text-color); /* Light Steel Blue for muted text */
-            padding-left: 0;
+            display: none;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(248, 250, 252, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
         }
+
         .requirement {
             display: flex;
             align-items: center;
-            margin: 3px 0;
-        }
-        .requirement::before {
-            content: "•";
-            margin-right: 8px;
-            font-weight: bold;
-            font-size: 1.1em;
-            width: 15px;
-            text-align: left;
-            color: var(--secondary-text-color); /* Muted bullet point */
-        }
-        .requirement.met {
-            color: var(--success-color);
-        }
-        .requirement.met::before {
-            content: "✓";
-            color: var(--success-color);
-            font-weight: bold;
-        }
-        .requirement.unmet {
-            color: var(--error-color);
-        }
-        .requirement.unmet::before {
-            content: "✗";
-            color: var(--error-color);
-            font-weight: bold;
+            font-size: 0.75rem;
+            margin: 0.25rem 0;
+            color: var(--text-muted);
         }
 
-        /* Radio Buttons */
+        .requirement-icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            font-weight: 600;
+        }
+
+        .requirement.unmet .requirement-icon {
+            background: #fee2e2;
+            color: var(--error-color);
+        }
+
+        .requirement.met .requirement-icon {
+            background: #dcfce7;
+            color: var(--success-color);
+        }
+
         .radio-group {
             display: flex;
-            gap: 20px;
-            margin-top: 10px;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
         }
-        .radio-group input[type="radio"] {
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 2px solid var(--secondary-text-color); /* Border for radio button */
-            background-color: transparent;
-            margin-right: 8px;
+
+        .radio-option {
+            display: flex;
+            align-items: center;
             cursor: pointer;
-            position: relative;
-            flex-shrink: 0;
-            transition: background-color 0.2s, border-color 0.2s;
         }
-        .radio-group input[type="radio"]:checked {
-            background-color: var(--primary-text-color); /* Filled with lavender when checked */
-            border-color: var(--primary-text-color);
-        }
-        .radio-group input[type="radio"]:checked::before {
-            content: '';
-            display: block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--pop-up-bg-color); /* White dot */
+
+        .radio-option input[type="radio"] {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid var(--border-color);
             border-radius: 50%;
+            margin-right: 0.5rem;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option input[type="radio"]:checked {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+        }
+
+        .radio-option input[type="radio"]:checked::after {
+            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: 0.375rem;
+            height: 0.375rem;
+            background: white;
+            border-radius: 50%;
         }
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            font-weight: 400;
+
+        .radio-option label {
+            font-size: 0.875rem;
+            color: var(--text-primary);
             cursor: pointer;
-            margin-bottom: 0;
-            color: var(--primary-text-color); /* Dark Lavender text for radio labels */
+            margin: 0;
         }
 
-        /* Admin Key Pop-down */
-        #adminKeyPopdown {
+        .admin-key-section {
             display: none;
-            margin-top: 15px; /* Reduced space above the pop-down field */
-            animation: fadeIn 0.3s ease-out;
+            animation: slideDown 0.3s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Responsive adjustments */
-        @media(max-width:768px){
-            .container{
-                padding: 25px;
-                margin: 20px auto;
-            }
+        .btn-primary {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), #1e40af);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            position: relative;
+            overflow: hidden;
         }
-        @media(max-width:576px){
-            .container{
-                max-width: 95%;
-                padding: 20px; /* Smallest padding for tiny screens */
-                margin-left: auto;
-                margin-right: auto;
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, var(--primary-hover), #1d4ed8);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .error-message, .success-message {
+            display: none;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .error-message {
+            background: rgba(254, 242, 242, 0.9);
+            color: var(--error-color);
+            border: 1px solid #fecaca;
+            backdrop-filter: blur(5px);
+        }
+
+        .success-message {
+            background: rgba(240, 253, 244, 0.9);
+            color: var(--success-color);
+            border: 1px solid #bbf7d0;
+            backdrop-filter: blur(5px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .login-link p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .login-link a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+                margin: 0.5rem;
             }
-            h2 {
-                font-size: 1.9em;
-                margin-bottom: 15px;
+
+            .header h1 {
+                font-size: 1.5rem;
             }
-            .btn-primary {
-                padding: 10px 18px;
-                font-size: 0.95em;
-            }
-            label {
-                font-size: 0.85em;
-            }
-            .form-control {
-                height: 40px;
-            }
-            .password-requirements, .error-message, .success-message {
-                font-size: 0.7em;
-            }
-            p {
-                font-size: 0.8em;
+
+            .radio-group {
+                flex-direction: column;
+                gap: 0.75rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Join Us</h2>
+        <div class="header">
+            <h1>Create Account</h1>
+            <p>Join our platform and get started today</p>
+        </div>
+
         <form action="/register" method="post" id="registrationForm" novalidate>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required aria-describedby="usernameHelp" placeholder="Choose your unique username">
-                <small id="usernameHelp" class="form-text" style="color: var(--secondary-text-color);">Your public display name.</small>
+                <div class="input-wrapper">
+                    <input type="text" class="form-control" id="username" name="username" required placeholder="Enter your username">
+                </div>
+                <div class="help-text">This will be your public display name</div>
+                <div id="usernameError" class="error-message">Username is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                <div id="emailError" class="error-message">Please enter a valid email address</div>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required aria-describedby="passwordHelp passwordError passwordSuccess" placeholder="Create a strong password">
+                <div class="input-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" required placeholder="Create a secure password">
+                </div>
                 <div class="password-requirements">
-                    <div class="requirement unmet" id="lengthReq">At least 8 characters</div>
+                    <div class="requirement unmet" id="lengthReq">
+                        <span class="requirement-icon">✗</span>
+                        <span>At least 8 characters long</span>
+                    </div>
                 </div>
-                <div id="passwordError" class="error-message" role="alert">
-                    Password must be at least 8 characters long.
-                </div>
-                <div id="passwordSuccess" class="success-message">
-                    Password meets requirements!
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required placeholder="your.email@example.com">
-                <div id="emailError" class="error-message" role="alert">
-                    Please enter a valid email address.
-                </div>
+                <div id="passwordError" class="error-message">Password must meet all requirements</div>
+                <div id="passwordSuccess" class="success-message">Password is strong!</div>
             </div>
 
             <div class="form-group">
                 <label>Account Type</label>
                 <div class="radio-group">
-                    <input type="radio" id="userRadio" name="userType" value="user" checked>
-                    <label for="userRadio">User</label>
-                    <input type="radio" id="adminRadio" name="userType" value="admin">
-                    <label for="adminRadio">Admin</label>
+                    <div class="radio-option">
+                        <input type="radio" id="userRadio" name="userType" value="user" checked>
+                        <label for="userRadio">Regular User</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="adminRadio" name="userType" value="admin">
+                        <label for="adminRadio">Administrator</label>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group" id="adminKeyPopdown">
-                <label for="adminKey">Admin Key</label>
-                <input type="password" class="form-control" id="adminKey" name="adminKey" placeholder="Enter the secret admin key" autocomplete="off">
-                <div id="adminKeyError" class="error-message" role="alert">
-                    Admin Key is required for Admin accounts.
+            <div class="form-group admin-key-section" id="adminKeySection">
+                <label for="adminKey">Administrator Key</label>
+                <div class="input-wrapper">
+                    <input type="password" class="form-control" id="adminKey" name="adminKey" placeholder="Enter administrator key" autocomplete="off">
                 </div>
+                <div class="help-text">Required for administrator account creation</div>
+                <div id="adminKeyError" class="error-message">Invalid administrator key</div>
             </div>
 
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Register Account</button>
+            <button type="submit" class="btn-primary" id="submitBtn" disabled>Create Account</button>
         </form>
-        <p>Already have an account? <a href="/login">Log In Here</a></p>
+
+        <div class="login-link">
+            <p>Already have an account? <a href="/login">Sign in here</a></p>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const usernameInput = document.getElementById('username');
-            const passwordInput = document.getElementById('password');
-            const emailInput = document.getElementById('email');
-            const lengthReq = document.getElementById('lengthReq');
-            const passwordError = document.getElementById('passwordError');
-            const passwordSuccess = document.getElementById('passwordSuccess');
-            const emailError = document.getElementById('emailError');
-
-            const submitBtn = document.getElementById('submitBtn');
             const form = document.getElementById('registrationForm');
-
+            const usernameInput = document.getElementById('username');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
             const userRadio = document.getElementById('userRadio');
             const adminRadio = document.getElementById('adminRadio');
-            const adminKeyPopdown = document.getElementById('adminKeyPopdown');
+            const adminKeySection = document.getElementById('adminKeySection');
             const adminKeyInput = document.getElementById('adminKey');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Error message elements
+            const usernameError = document.getElementById('usernameError');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const passwordSuccess = document.getElementById('passwordSuccess');
             const adminKeyError = document.getElementById('adminKeyError');
 
-            // --- Validation Functions ---
+            // Password requirement elements
+            const lengthReq = document.getElementById('lengthReq');
+
+            const VALID_ADMIN_KEY = 'admin'; // The only valid admin key
+
+            // Validation functions
             function validateUsername() {
                 const username = usernameInput.value.trim();
-                if (username.length > 0) {
+                const isValid = username.length >= 3;
+
+                if (username.length === 0) {
+                    usernameInput.classList.remove('error', 'success');
+                    usernameError.style.display = 'none';
+                } else if (isValid) {
                     usernameInput.classList.remove('error');
                     usernameInput.classList.add('success');
-                    return true;
+                    usernameError.style.display = 'none';
                 } else {
                     usernameInput.classList.remove('success');
                     usernameInput.classList.add('error');
-                    return false;
+                    usernameError.textContent = 'Username must be at least 3 characters long';
+                    usernameError.style.display = 'block';
                 }
+
+                return isValid || username.length === 0;
+            }
+
+            function validateEmail() {
+                const email = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const isValid = emailRegex.test(email);
+
+                if (email.length === 0) {
+                    emailInput.classList.remove('error', 'success');
+                    emailError.style.display = 'none';
+                } else if (isValid) {
+                    emailInput.classList.remove('error');
+                    emailInput.classList.add('success');
+                    emailError.style.display = 'none';
+                } else {
+                    emailInput.classList.remove('success');
+                    emailInput.classList.add('error');
+                    emailError.style.display = 'block';
+                }
+
+                return isValid || email.length === 0;
             }
 
             function validatePassword() {
                 const password = passwordInput.value;
                 const isLengthValid = password.length >= 8;
 
+                // Update requirement indicator
                 if (isLengthValid) {
                     lengthReq.classList.remove('unmet');
                     lengthReq.classList.add('met');
+                    lengthReq.querySelector('.requirement-icon').textContent = '✓';
                 } else {
                     lengthReq.classList.remove('met');
                     lengthReq.classList.add('unmet');
+                    lengthReq.querySelector('.requirement-icon').textContent = '✗';
                 }
 
                 if (password.length === 0) {
@@ -396,28 +583,21 @@
                     passwordError.style.display = 'block';
                     passwordSuccess.style.display = 'none';
                 }
-                return isLengthValid;
-            }
 
-            function validateEmail() {
-                const email = emailInput.value.trim();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (emailRegex.test(email)) {
-                    emailInput.classList.remove('error');
-                    emailInput.classList.add('success');
-                    emailError.style.display = 'none';
-                    return true;
-                } else {
-                    emailInput.classList.remove('success');
-                    emailInput.classList.add('error');
-                    emailError.style.display = 'block';
-                    return false;
-                }
+                return isLengthValid || password.length === 0;
             }
 
             function validateAdminKey() {
                 if (adminRadio.checked) {
-                    if (adminKeyInput.value.trim().length > 0) {
+                    const adminKey = adminKeyInput.value.trim();
+                    const isValid = adminKey === VALID_ADMIN_KEY;
+
+                    if (adminKey.length === 0) {
+                        adminKeyInput.classList.remove('error', 'success');
+                        adminKeyError.textContent = 'Administrator key is required';
+                        adminKeyError.style.display = 'block';
+                        return false;
+                    } else if (isValid) {
                         adminKeyInput.classList.remove('error');
                         adminKeyInput.classList.add('success');
                         adminKeyError.style.display = 'none';
@@ -425,78 +605,97 @@
                     } else {
                         adminKeyInput.classList.remove('success');
                         adminKeyInput.classList.add('error');
+                        adminKeyError.textContent = 'Invalid administrator key. Please contact your system administrator.';
                         adminKeyError.style.display = 'block';
                         return false;
                     }
                 }
+
                 adminKeyInput.classList.remove('error', 'success');
                 adminKeyError.style.display = 'none';
                 return true;
             }
 
-            // --- Form State Update ---
-            function updateSubmitButtonState() {
-                const isUsernameValid = validateUsername();
-                const isPasswordValid = validatePassword();
-                const isEmailValid = validateEmail();
+            function updateSubmitButton() {
+                const isUsernameValid = usernameInput.value.trim().length >= 3;
+                const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+                const isPasswordValid = passwordInput.value.length >= 8;
                 const isAdminKeyValid = validateAdminKey();
 
-                if (isUsernameValid && isPasswordValid && isEmailValid && isAdminKeyValid) {
-                    submitBtn.disabled = false;
-                } else {
-                    submitBtn.disabled = true;
-                }
+                const allValid = isUsernameValid && isEmailValid && isPasswordValid && isAdminKeyValid;
+                submitBtn.disabled = !allValid;
             }
 
-            // --- Event Listeners ---
-            usernameInput.addEventListener('input', updateSubmitButtonState);
-            usernameInput.addEventListener('blur', updateSubmitButtonState);
-
-            passwordInput.addEventListener('input', updateSubmitButtonState);
-            passwordInput.addEventListener('blur', updateSubmitButtonState);
-
-            emailInput.addEventListener('input', updateSubmitButtonState);
-            emailInput.addEventListener('blur', updateSubmitButtonState);
-
-            adminKeyInput.addEventListener('input', updateSubmitButtonState);
-            adminKeyInput.addEventListener('blur', updateSubmitButtonState);
-
-            function handleUserTypeChange() {
+            function handleAccountTypeChange() {
                 if (adminRadio.checked) {
-                    adminKeyPopdown.style.display = 'block';
+                    adminKeySection.style.display = 'block';
                     adminKeyInput.setAttribute('required', 'true');
                 } else {
-                    adminKeyPopdown.style.display = 'none';
+                    adminKeySection.style.display = 'none';
                     adminKeyInput.removeAttribute('required');
                     adminKeyInput.value = '';
                     adminKeyInput.classList.remove('error', 'success');
                     adminKeyError.style.display = 'none';
                 }
-                updateSubmitButtonState();
+                updateSubmitButton();
             }
 
-            userRadio.addEventListener('change', handleUserTypeChange);
-            adminRadio.addEventListener('change', handleUserTypeChange);
+            // Event listeners
+            usernameInput.addEventListener('input', function() {
+                validateUsername();
+                updateSubmitButton();
+            });
+
+            emailInput.addEventListener('input', function() {
+                validateEmail();
+                updateSubmitButton();
+            });
+
+            passwordInput.addEventListener('input', function() {
+                validatePassword();
+                updateSubmitButton();
+            });
+
+            adminKeyInput.addEventListener('input', function() {
+                validateAdminKey();
+                updateSubmitButton();
+            });
+
+            userRadio.addEventListener('change', handleAccountTypeChange);
+            adminRadio.addEventListener('change', handleAccountTypeChange);
 
             form.addEventListener('submit', function(e) {
-                const isUsernameValid = validateUsername();
-                const isPasswordValid = validatePassword();
-                const isEmailValid = validateEmail();
+                // Final validation before submit
+                const isUsernameValid = usernameInput.value.trim().length >= 3;
+                const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+                const isPasswordValid = passwordInput.value.length >= 8;
                 const isAdminKeyValid = validateAdminKey();
 
-                if (!isUsernameValid || !isPasswordValid || !isEmailValid || !isAdminKeyValid) {
+                if (!isUsernameValid || !isEmailValid || !isPasswordValid || !isAdminKeyValid) {
                     e.preventDefault();
-                    alert('Please correct the highlighted errors before submitting.');
-                    if (!isUsernameValid) usernameInput.focus();
-                    else if (!isPasswordValid) passwordInput.focus();
-                    else if (!isEmailValid) emailInput.focus();
-                    else if (adminRadio.checked && !isAdminKeyValid) adminKeyInput.focus();
+
+                    // Show all validation errors
+                    validateUsername();
+                    validateEmail();
+                    validatePassword();
+                    validateAdminKey();
+
+                    // Focus on first invalid field
+                    if (!isUsernameValid) {
+                        usernameInput.focus();
+                    } else if (!isEmailValid) {
+                        emailInput.focus();
+                    } else if (!isPasswordValid) {
+                        passwordInput.focus();
+                    } else if (!isAdminKeyValid) {
+                        adminKeyInput.focus();
+                    }
                 }
             });
 
-            // Initial state setup
-            updateSubmitButtonState();
-            handleUserTypeChange();
+            // Initial state
+            updateSubmitButton();
+            handleAccountTypeChange();
         });
     </script>
 </body>
