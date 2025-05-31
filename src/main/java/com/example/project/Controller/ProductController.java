@@ -37,7 +37,7 @@ public class ProductController {
 	 @Autowired
 	 private CategoryService categoryService;
 	
-	private  String uploadDir="C:/Users/2400570/Downloads/imgs/";
+	private  String uploadDir="C:\\Users\\2401210\\OneDrive - Cognizant\\Pictures\\siteImgs";
 	
 	@GetMapping("/all")
 	public ModelAndView getAllProducts() {

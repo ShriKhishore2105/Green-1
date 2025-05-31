@@ -83,8 +83,18 @@
         </div>
 
         <div class="form-group">
-            <label for="categoryId">Category ID:</label>
-            <input type="number" class="form-control" id="categoryId" name="categoryId" value="${editProductObj.categoryId!}" required min="1"/>
+             <label>Category:</label>
+    <select name="categoryId" required>
+        <option value="">-- Select Category --</option>
+        <#list categories as entry>
+            <option value="${entry.key}"
+                <#if editProductObj.categoryId?? && editProductObj.categoryId == entry.key>
+                    selected
+                </#if>>
+                ${entry.value}
+            </option>
+        </#list>
+    </select>
         </div>
 
         <div class="form-group">
