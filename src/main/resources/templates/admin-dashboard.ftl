@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product - Emporia Admin</title>
+    <title>Admin Dashboard - Emporia</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -48,7 +48,7 @@
             overflow-x: hidden;
         }
 
-        /* Animated Background */
+        /* Animated Background (Optional, same as previous pages) */
         body::before {
             content: '';
             position: fixed;
@@ -200,186 +200,77 @@
             display: inline-flex;
         }
 
-        /* Main Content Styling */
+        /* Main content container for dashboard */
         .main-content {
-            flex: 1; /* Takes up remaining vertical space */
+            flex: 1; /* Allows main content to take remaining vertical space */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             padding: 2rem;
         }
 
-        /* Container for the form */
-        .form-container {
+        .dashboard-card {
             background-color: var(--surface);
             padding: 2.5rem;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--border-color);
-            max-width: 800px; /* Adjusted max-width for two-column layout */
+            max-width: 500px; /* Adjust width for dashboard content */
             width: 100%;
-            margin: 2rem auto 40px auto;
+            text-align: center;
+            margin-top: 2rem; /* Space below navbar */
         }
 
-        h1 {
-            text-align: center;
+        .dashboard-card h1 {
             color: var(--text-primary);
             margin-bottom: 2rem;
             font-weight: 700;
-            font-size: 2rem;
+            font-size: 2.2rem;
             letter-spacing: -0.025em;
         }
 
-        /* Form Grid for Two Columns */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Two equal columns */
-            gap: 1.5rem 2rem; /* Row gap, Column gap */
-            margin-bottom: 1.5rem;
+        .dashboard-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* Space between list items */
         }
 
-        .form-group.full-width {
-            grid-column: 1 / -1; /* Spans all columns */
-        }
-
-        .form-group {
-            margin-bottom: 0;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            display: block;
-            font-size: 0.95rem;
-        }
-
-        /* Form Controls (input, textarea, select) */
-        .form-control {
+        .dashboard-links li {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            font-size: 0.95rem;
-            background: var(--background);
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-            outline: none;
         }
 
-        .form-control:focus {
-            border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
-            background: var(--surface);
-        }
-
-        .form-control::placeholder {
-            color: var(--text-muted);
-            opacity: 0.8;
-        }
-
-        .form-control-file {
-            display: block;
-            width: 100%;
-            padding: 0.75rem 0;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            border: none;
-            background-color: transparent;
-        }
-
-        /* Disabled Category Field */
-        .form-control[disabled] {
-            background-color: var(--background); /* Use a slightly darker background for disabled */
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        /* Button Styling */
-        .btn {
-            padding: 0.8rem 1.5rem;
-            font-size: 1rem;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-sm);
-            position: relative;
-            overflow: hidden;
-            display: inline-flex;
+        .dashboard-links a {
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.025em;
+            padding: 1rem;
+            background: var(--primary-light);
+            color: var(--primary-color);
             text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
+        .dashboard-links a:hover {
+            background: var(--primary-color);
+            color: white;
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
         }
 
-        .btn:active {
-            transform: translateY(0);
-            box-shadow: var(--shadow-sm);
+        .dashboard-links a i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
         }
 
-        /* Primary Button (Update Product) */
-        .btn-primary-custom {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-            color: white;
-            border: none;
-            box-shadow: var(--shadow-md), 0 4px 10px rgba(37, 99, 235, 0.25);
-            min-width: 160px;
-        }
-
-        .btn-primary-custom:hover {
-            background: linear-gradient(135deg, var(--primary-hover), #173e97);
-            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35), 0 3px 6px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Ghost/Outline Button for Secondary Actions (Back to List) */
-        .btn-ghost-secondary {
-            background: transparent;
-            color: var(--secondary-color);
-            border: 1px solid var(--secondary-color);
-            box-shadow: none;
-            min-width: 150px;
-        }
-
-        .btn-ghost-secondary:hover {
-            background: var(--secondary-color);
-            color: white;
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* Button Group for specific alignment */
-        .form-actions {
-            display: flex;
-            justify-content: space-between; /* Pushes items to opposite ends */
-            align-items: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Responsive Adjustments */
+        /* Responsive Design */
         @media (max-width: 767px) {
             .navbar {
                 flex-direction: column;
@@ -395,31 +286,21 @@
                 justify-content: center;
                 gap: 0.5rem;
             }
-            .form-container {
+            .dashboard-card {
                 padding: 1.5rem;
                 margin-top: 1.5rem;
             }
-            h1 {
-                font-size: 1.75rem;
+            .dashboard-card h1 {
+                font-size: 1.8rem;
                 margin-bottom: 1.5rem;
             }
-            .form-grid {
-                grid-template-columns: 1fr; /* Stack columns on small screens */
-                gap: 1rem;
+            .dashboard-links a {
+                padding: 0.8rem;
+                font-size: 1rem;
             }
-            .form-group.full-width {
-                grid-column: auto; /* Reset spanning for stacked layout */
-            }
-            .btn-primary-custom,
-            .btn-ghost-secondary {
-                padding: 0.7rem 1rem;
-                font-size: 0.9rem;
-                width: 100%; /* Make buttons full width on small screens */
-                min-width: auto;
-            }
-            .form-actions {
-                flex-direction: column; /* Stack buttons on small screens */
-                gap: 1rem;
+            .dashboard-links a i {
+                margin-right: 0.6rem;
+                font-size: 1rem;
             }
         }
 
@@ -432,7 +313,7 @@
                 padding: 0.5rem 0.75rem;
                 font-size: 0.8rem;
             }
-            .form-container {
+            .dashboard-card {
                 margin-left: 1rem;
                 margin-right: 1rem;
             }
@@ -458,64 +339,13 @@
 </nav>
 
 <div class="main-content">
-    <div class="form-container">
-        <h1><i class="fas fa-edit"></i> Edit Product</h1>
-
-        <form action="/admin/product/edit" method="post" enctype="multipart/form-data">
-
-            <input type="hidden" name="productId" value="${editProductObj.productId!}"/>
-
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="name">Product Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" value="${editProductObj.name!}" required placeholder="e.g., Smartwatch X10"/>
-                </div>
-                <div class="form-group">
-                    <label for="price">Price (₹):</label>
-                    <input type="number" step="0.01" class="form-control" id="price" name="price" value="${editProductObj.price!}" required min="0" placeholder="e.g., 2999.00"/>
-                </div>
-                <div class="form-group">
-                    <label for="categoryId">Category:</label>
-                    <select name="categoryId" id="categoryId" class="form-control" disabled>
-                        <option value="">-- Select Category --</option>
-                        <#list categories as entry>
-                            <option value="${entry.key}"
-                                <#if editProductObj.categoryId?? && editProductObj.categoryId == entry.key>
-                                    selected
-                                </#if>>
-                                ${entry.value}
-                            </option>
-                        </#list>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="stockQuantity">Stock Quantity:</label>
-                    <input type="number" class="form-control" id="stockQuantity" name="stockQuantity" value="${editProductObj.stockQuantity!}" required min="0" placeholder="e.g., 150"/>
-                </div>
-                <div class="form-group full-width">
-                    <label for="description">Description:</label>
-                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Detailed description of the product...">${editProductObj.description!}</textarea>
-                </div>
-                <div class="form-group full-width">
-                    <label for="productImage">Product Image:</label>
-                    <input type="file" class="form-control-file" id="productImage" name="productImage" accept="image/*"/>
-                    <#if editProductObj.imagePath?? && editProductObj.imagePath?has_content>
-                        <small class="form-text text-muted mt-2">Current image: <a href="${editProductObj.imagePath}" target="_blank">View Image</a></small>
-                    </#if>
-                </div>
-            </div>
-
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <div class="form-actions">
-                <a href="/admin/product/all" class="btn btn-ghost-secondary">
-                    <i class="fas fa-arrow-alt-circle-left"></i> Back to List
-                </a>
-                <button type="submit" class="btn btn-primary-custom">
-                    <i class="fas fa-save"></i> Update Product
-                </button>
-            </div>
-        </form>
+    <div class="dashboard-card">
+        <h1>Welcome to Admin Dashboard!</h1>
+        <ul class="dashboard-links">
+            <li><a href="/admin/product/add"><i class="fas fa-plus-circle"></i> Add New Product</a></li>
+            <li><a href="/admin/product/all"><i class="fas fa-box-open"></i> View All Products</a></li>
+            <li><a href="/admin/orders"><i class="fas fa-receipt"></i> View Orders</a></li>
+        </ul>
     </div>
 </div>
 

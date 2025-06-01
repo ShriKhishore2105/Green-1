@@ -8,26 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1d4ed8;
-            --primary-light: #dbeafe;
-            --secondary-color: #64748b;
-            --success-color: #059669;
-            --error-color: #dc2626;
-            --warning-color: #d97706;
-            --background: #f8fafc;
-            --surface: #ffffff;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-            --border-color: #e2e8f0;
-            --border-focus: #3b82f6;
+            --primary-color: #2563eb; /* Blue 700 */
+            --primary-hover: #1d4ed8; /* Blue 800 */
+            --primary-light: #dbeafe; /* Blue 100 */
+            --secondary-color: #64748b; /* Slate 500 */
+            --success-color: #059669; /* Green 600 */
+            --error-color: #dc2626; /* Red 600 */
+            --warning-color: #d97706; /* Amber 600 */
+            --background: #f8fafc; /* Cool Gray 50 */
+            --surface: #ffffff; /* White */
+            --text-primary: #0f172a; /* Slate 900 */
+            --text-secondary: #475569; /* Slate 700 */
+            --text-muted: #94a3b8; /* Slate 400 */
+            --border-color: #e2e8f0; /* Slate 200 */
+            --border-focus: #3b82f6; /* Blue 500 */
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
+            --radius-sm: 0.375rem; /* 6px */
+            --radius-md: 0.5rem; /* 8px */
+            --radius-lg: 0.75rem; /* 12px */
         }
 
         * {
@@ -44,7 +44,7 @@
             color: var(--text-primary);
             line-height: 1.6;
             position: relative;
-            background: #f0f9ff;
+            background: #f0f9ff; /* Very light blue background */
             overflow-x: hidden;
         }
 
@@ -92,7 +92,7 @@
             100% { transform: translateX(50px); }
         }
 
-        /* Professional Navbar (reused from other pages) */
+        /* Navbar */
         .navbar {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(16px);
@@ -149,10 +149,6 @@
             width: 100%;
         }
 
-        .search-container {
-            display: none; /* Hide search for admin page if not needed */
-        }
-
         .navbar-links {
             display: flex;
             gap: 1rem;
@@ -204,28 +200,28 @@
             display: inline-flex;
         }
 
-        /* Main Content Container for two-column layout */
+        /* Main Content Styling */
         .main-content {
-            flex: 1; /* Allows main content to take remaining vertical space */
+            flex: 1; /* Takes up remaining vertical space */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align items to the top */
+            align-items: center;
             padding: 2rem;
-            gap: 2rem; /* Space between the two columns */
-            max-width: 1200px;
-            margin: 2rem auto; /* Center the main content area */
         }
 
-        .form-column {
-            flex: 1; /* Each column takes equal width */
+        /* Container for the form */
+        .form-container { /* Renamed from .container to avoid conflict with Bootstrap's container class */
             background-color: var(--surface); /* White background for the form container */
             padding: 2.5rem; /* Increased padding */
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg); /* Soft shadow */
             border: 1px solid var(--border-color); /* Subtle border */
+            max-width: 800px; /* Increased max-width for two-column layout */
+            width: 100%; /* Ensure it takes full width up to max-width */
+            margin: 2rem auto 40px auto; /* Center the container, space at bottom */
         }
 
-        h1 {
+        .form-container h1 {
             text-align: center;
             color: var(--text-primary);
             margin-bottom: 2rem;
@@ -234,8 +230,23 @@
             letter-spacing: -0.025em;
         }
 
+        /* Form Grid for Two Columns */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two equal columns */
+            gap: 1.5rem 2rem; /* Row gap, Column gap */
+            margin-bottom: 1.5rem; /* Space before full-width fields */
+        }
+
+        /* Make description and image full width in the grid */
+        .form-group.full-width {
+            grid-column: 1 / -1; /* Spans all columns */
+        }
+
+
+        /* Form Group and Label */
         .form-group {
-            margin-bottom: 1.5rem; /* More space between form groups */
+            margin-bottom: 0; /* Remove default margin as grid handles spacing */
         }
 
         .form-group label {
@@ -246,38 +257,50 @@
             font-size: 0.95rem;
         }
 
-        .form-control, .form-control-file, .form-select {
+        /* Form Controls (input, textarea, select) */
+        .form-control {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            font-size: 0.9rem;
-            background: var(--background);
+            font-size: 0.95rem; /* Slightly larger font */
+            background: var(--background); /* Light background for input fields */
             color: var(--text-primary);
             transition: all 0.2s ease;
             outline: none;
         }
 
-        .form-control:focus, .form-control-file:focus, .form-select:focus {
+        .form-control:focus {
             border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
-            background: var(--surface);
+            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1); /* Subtle blue glow */
+            background: var(--surface); /* White on focus */
         }
 
         .form-control::placeholder {
             color: var(--text-muted);
+            opacity: 0.8; /* Make placeholder slightly more visible */
         }
 
-        /* Button Styling (reused and adapted from payment/product pages) */
-        .btn-action {
-            padding: 0.875rem 1.5rem;
+        /* File Input specific styling */
+        .form-control-file {
+            display: block; /* Make it block level */
+            width: 100%; /* Full width */
+            padding: 0.75rem 0; /* Adjust padding for file input */
             font-size: 0.95rem;
-            border: none;
+            color: var(--text-secondary);
+            border: none; /* Remove default file input border */
+            background-color: transparent; /* Transparent background */
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 0.8rem 1.5rem; /* Consistent padding for all buttons */
+            font-size: 1rem; /* Base font size for buttons */
             border-radius: var(--radius-md);
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-sm); /* Subtle shadow */
             position: relative;
             overflow: hidden;
             display: inline-flex;
@@ -286,9 +309,10 @@
             gap: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.025em;
+            text-decoration: none; /* For anchor tags styled as buttons */
         }
 
-        .btn-action::before {
+        .btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -299,150 +323,62 @@
             transition: left 0.5s;
         }
 
-        .btn-action:hover::before {
+        .btn:hover::before {
             left: 100%;
         }
 
-        .btn-action:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        .btn:hover {
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: var(--shadow-md); /* More prominent shadow on hover */
         }
 
-        .btn-action:active {
+        .btn:active {
             transform: translateY(0);
+            box-shadow: var(--shadow-sm); /* Reset shadow on click */
         }
 
-        .btn-primary-custom { /* For Add Product */
+        /* Primary Button (Add Product) */
+        .btn-primary-custom { /* Using a custom class to avoid conflicting with potential default Bootstrap .btn-primary */
             background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
             color: white;
-            box-shadow:
-                var(--shadow-md),
-                0 4px 14px rgba(37, 99, 235, 0.25);
-            width: 100%; /* Make it block level */
-            margin-top: 1.5rem;
+            border: none;
+            box-shadow: var(--shadow-md), 0 4px 10px rgba(37, 99, 235, 0.25);
+            /* Removed width: 100% here to allow custom alignment */
+            min-width: 150px; /* Give it a minimum width */
         }
 
         .btn-primary-custom:hover {
             background: linear-gradient(135deg, var(--primary-hover), #173e97);
-            box-shadow:
-                0 8px 20px rgba(37, 99, 235, 0.3),
-                0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35), 0 3px 6px rgba(0, 0, 0, 0.15);
         }
 
-        .btn-secondary-custom { /* For Back to List */
+        /* Ghost/Outline Button for Secondary Actions */
+        .btn-ghost-secondary {
+            background: transparent;
+            color: var(--secondary-color);
+            border: 1px solid var(--secondary-color);
+            box-shadow: none; /* No initial shadow */
+            min-width: 150px; /* Give it a minimum width */
+        }
+
+        .btn-ghost-secondary:hover {
             background: var(--secondary-color);
             color: white;
-            box-shadow:
-                var(--shadow-md),
-                0 4px 14px rgba(100, 116, 139, 0.25);
+            box-shadow: var(--shadow-sm); /* Add shadow on hover */
         }
 
-        .btn-secondary-custom:hover {
-            background: #4b5563;
-            box-shadow:
-                0 8px 20px rgba(100, 116, 139, 0.3),
-                0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-danger-custom { /* For Logout */
-            background: var(--error-color);
-            color: white;
-            box-shadow:
-                var(--shadow-md),
-                0 4px 14px rgba(220, 38, 38, 0.25);
-        }
-
-        .btn-danger-custom:hover {
-            background: #b91c1c;
-            box-shadow:
-                0 8px 20px rgba(220, 38, 38, 0.3),
-                0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .d-flex.justify-content-between.mt-4 {
+        /* Button Group for specific alignment */
+        .form-actions {
             display: flex;
-            justify-content: space-between;
-            margin-top: 2rem; /* Adjusted margin-top for better spacing */
-        }
-        .d-flex.justify-content-between.mt-4 .btn-action {
-            flex-grow: 1; /* Allow buttons to grow */
-            max-width: 48%; /* Adjust max-width to create space between them */
-        }
-
-        /* Informational/Welcome Column */
-        .info-column {
-            flex: 1;
-            background: linear-gradient(135deg, var(--primary-light), rgba(255, 255, 255, 0.8));
-            padding: 2.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
+            justify-content: space-between; /* Pushes items to opposite ends */
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            margin-top: 2rem; /* Space above action buttons */
+            padding-top: 1rem; /* Padding at the top */
+            border-top: 1px solid var(--border-color); /* Separator line */
         }
 
-        .info-column h2 {
-            font-size: 2.25rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            text-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
-        }
-
-        .info-column p {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-            max-width: 400px;
-        }
-
-        .info-column ul {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 1.5rem;
-            text-align: left;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .info-column ul li {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        .info-column ul li i {
-            color: var(--primary-color);
-            font-size: 1.1em;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .main-content {
-                flex-direction: column; /* Stack columns on smaller screens */
-                padding: 1.5rem;
-                gap: 1.5rem;
-            }
-            .form-column, .info-column {
-                max-width: 100%; /* Allow columns to take full width */
-                padding: 2rem;
-            }
-            .d-flex.justify-content-between.mt-4 .btn-action {
-                max-width: 100%; /* Buttons take full width */
-            }
-        }
-
-        @media (max-width: 768px) {
+        /* Responsive Adjustments */
+        @media (max-width: 767px) {
             .navbar {
                 flex-direction: column;
                 padding: 1rem;
@@ -457,20 +393,31 @@
                 justify-content: center;
                 gap: 0.5rem;
             }
-            h1 {
-                font-size: 1.75rem;
-            }
-            .form-column, .info-column {
+            .form-container {
                 padding: 1.5rem;
+                margin-top: 1.5rem;
             }
-            .info-column h2 {
+            .form-container h1 {
                 font-size: 1.75rem;
+                margin-bottom: 1.5rem;
             }
-            .info-column p {
+            .form-grid {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+                gap: 1rem;
+            }
+            .form-group.full-width {
+                grid-column: auto; /* Reset spanning for stacked layout */
+            }
+            .btn-primary-custom,
+            .btn-ghost-secondary {
+                padding: 0.7rem 1rem;
                 font-size: 0.9rem;
+                width: 100%; /* Make buttons full width on small screens */
+                min-width: auto;
             }
-            .info-column ul li {
-                font-size: 0.85rem;
+            .form-actions {
+                flex-direction: column; /* Stack buttons on small screens */
+                gap: 1rem; /* Space between stacked buttons */
             }
         }
 
@@ -483,13 +430,9 @@
                 padding: 0.5rem 0.75rem;
                 font-size: 0.8rem;
             }
-            .btn-action {
-                padding: 0.75rem 1rem;
-                font-size: 0.85rem;
-            }
-            .d-flex.justify-content-between.mt-4 {
-                flex-direction: column;
-                gap: 1rem;
+            .form-container {
+                margin-left: 1rem;
+                margin-right: 1rem;
             }
         }
     </style>
@@ -502,9 +445,8 @@
     </div>
     <div class="navbar-section">
         <div class="navbar-links">
-            <a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="/admin/product/all"><i class="fas fa-box"></i> Products</a>
-            <a href="/admin/users"><i class="fas fa-users"></i> Users</a>
+            <a href="/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="/admin/product/all"><i class="fas fa-boxes"></i> Products</a>
             <form action="/logout" method="post" class="logout-form">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <button type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -514,72 +456,59 @@
 </nav>
 
 <div class="main-content">
-    <div class="form-column">
+    <div class="form-container">
         <h1><i class="fas fa-plus-circle"></i> Add New Product</h1>
 
         <form action="/admin/product/add" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="name">Product Name:</label>
-                <input type="text" class="form-control" id="name" name="name" value="${productFormObj.name!}" required placeholder="e.g., Smartwatch X10"/>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Detailed description of the product...">${productFormObj.description!}</textarea>
-            </div>
-            <div class="form-group">
-                <label for="price">Price (₹):</label>
-                <input type="number" step="0.01" class="form-control" id="price" name="price" value="${productFormObj.price!}" required min="0" placeholder="e.g., 2999.00"/>
-            </div>
-            <div class="form-group">
-                <label for="categoryId">Category ID:</label>
-                <input type="number" class="form-control" id="categoryId" name="categoryId" value="${productFormObj.categoryId!}" required min="1" placeholder="e.g., 1 (Electronics)"/>
-            </div>
-            <div class="form-group">
-                <label for="stockQuantity">Stock Quantity:</label>
-                <input type="number" class="form-control" id="stockQuantity" name="stockQuantity" value="${productFormObj.stockQuantity!}" required min="0" placeholder="e.g., 150"/>
-            </div>
-            <div class="form-group">
-                <label for="productImage">Product Image:</label>
-                <input type="file" class="form-control-file" id="productImage" name="productImage" accept="image/*"/>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Product Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" value="${productFormObj.name!}" required placeholder="e.g., Smartwatch X10"/>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (₹):</label>
+                    <input type="number" step="0.01" class="form-control" id="price" name="price" value="${productFormObj.price!}" required min="10" placeholder="e.g., 2999.00"/>
+                </div>
+                <div class="form-group">
+                    <label for="categoryId">Category:</label>
+                    <select name="categoryId" id="categoryId" class="form-control" required>
+                        <option value="">-- Select Category --</option>
+                        <#list categories as entry>
+                            <option value="${entry.key}" <#if productFormObj.categoryId?? && productFormObj.categoryId == entry.key>selected</#if>>
+                                ${entry.value}
+                            </option>
+                        </#list>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stockQuantity">Stock Quantity:</label>
+                    <input type="number" class="form-control" id="stockQuantity" name="stockQuantity" value="${productFormObj.stockQuantity!}" required min="0" placeholder="e.g., 150"/>
+                </div>
+                <div class="form-group full-width">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Detailed description of the product...">${productFormObj.description!}</textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label for="productImage">Product Image:</label>
+                    <input type="file" class="form-control-file" id="productImage" name="productImage" accept="image/*"/>
+                </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button type="submit" class="btn-action btn-primary-custom">
-                <i class="fas fa-plus-square"></i> Add Product
-            </button>
-        </form>
 
-        <div class="d-flex justify-content-between mt-4">
-            <a href="/admin/product/all" class="btn-action btn-secondary-custom">
-                <i class="fas fa-arrow-alt-circle-left"></i> Back to List
-            </a>
-            <form action="/logout" method="post" class="logout-form">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button class="btn-action btn-danger-custom" type="submit">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+            <div class="form-actions">
+                <a href="/admin/product/all" class="btn btn-ghost-secondary">
+                    <i class="fas fa-arrow-alt-circle-left"></i> Back to List
+                </a>
+                <button type="submit" class="btn btn-primary-custom">
+                    <i class="fas fa-plus-square"></i> Add Product
                 </button>
-            </form>
-        </div>
-    </div>
-
-    <div class="info-column">
-        <h2><i class="fas fa-info-circle"></i> Product Management Guide</h2>
-        <p>
-            Use this form to add new products to your Emporia store. Ensure all details are accurate
-            for a smooth customer experience.
-        </p>
-        <ul>
-            <li><i class="fas fa-check-circle"></i> **Product Name:** Keep it concise and descriptive.</li>
-            <li><i class="fas fa-check-circle"></i> **Description:** Provide comprehensive details about the product's features and benefits.</li>
-            <li><i class="fas fa-check-circle"></i> **Price:** Enter the selling price. Only positive values are allowed.</li>
-            <li><i class="fas fa-check-circle"></i> **Category ID:** Assign the correct category to help customers find it easily.</li>
-            <li><i class="fas fa-check-circle"></i> **Stock Quantity:** Update current available stock. Minimum 0.</li>
-            <li><i class="fas fa-check-circle"></i> **Product Image:** Upload a clear, high-quality image.</li>
-        </ul>
-        <p>
-            After adding, you can manage products via the "Products" link in the navigation.
-        </p>
+            </div>
+        </form>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

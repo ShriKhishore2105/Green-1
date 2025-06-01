@@ -1,5 +1,5 @@
 package com.example.project.Controller;
-
+import com.example.project.Controller.HomeController ;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.project.model.Product;
+import com.example.project.service.CategoryService;
 import com.example.project.service.ProductService;
 import jakarta.validation.Valid;
 
@@ -32,71 +33,77 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
-	
-	private  String uploadDir="C:/stock images";
-	
+
+	@Autowired
+	private CategoryService categoryService;
+
+	private  String uploadDir="C:/Project images/";
+
 	@GetMapping("/all")
 	public ModelAndView getAllProducts() {
 		List<Product> products=productService.getAllProducts();
 		return new ModelAndView("productList","products",products);
-		
+
 	}
 
-	
+
 	@GetMapping("/add")
 	public String getAddForm(Model model) {
-		System.out.print("get calleff");
+
 		Product product=new Product();
 		model.addAttribute("productFormObj", product);
+		model.addAttribute("categories",categoryService.getCategoryMap().entrySet());
 		return "addProduct";
 	}
-	
+
 	@PostMapping("/add")
 	public String addProduct(@Valid @ModelAttribute("productFormObj") Product product,BindingResult result) {
 		System.out.print("called");
-		
-	
-	Product savedProduct=productService.addProduct(product);
-		
-		
 
-		
+
+		Product savedProduct=productService.addProduct(product);
+
+
+
+
 		MultipartFile image=product.getProductImage();
 		if(image!=null &&!image.isEmpty()) {
 			Path path=Paths.get(uploadDir+savedProduct.getProductId()+".jpg");
-			
+
 			try {
 				image.transferTo(new File(path.toString()));
-				
+
 			}
 			catch(IOException e) {
-			e.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 		return "redirect:/admin/product/all";
-		
+
 	}
-	
+
 	@GetMapping("/edit/{productId}")
 	public ModelAndView getEditForm(@PathVariable Integer productId) {
-		Optional<Product> product=productService.getProductDetails(productId);
-		
-		Product p=product.get();
-		System.out.println("id"+p.getProductId());
-		
-		
-		return new ModelAndView("editProduct","editProductObj",p);
-		
+		Optional<Product> productOpt = productService.getProductDetails(productId);
+
+		if (productOpt.isPresent()) {
+			Product product = productOpt.get();
+			ModelAndView mav = new ModelAndView("editProduct");
+			mav.addObject("editProductObj", product);
+			mav.addObject("categories", categoryService.getCategoryMap().entrySet()); // add categories
+			return mav;
+		}
+
+		return new ModelAndView("redirect:/admin/product/all");
 	}
-	
+
 	@PostMapping("/edit")
 	public String updateProduct(@ModelAttribute("editProductObj") Product product) {
 
 		productService.updateProduct(product);
 		return "redirect:/admin/product/all";
 	}
-	
+
 	@GetMapping("/delete/{productId}")
 	public String deleteProduct(@PathVariable Integer productId) {
 		Path path=Paths.get(uploadDir+productId+".jpg");
@@ -109,10 +116,5 @@ public class ProductController {
 		productService.deleteProduct(productId);
 		return "redirect:/admin/product/all";
 	}
-	
-	
-	
-	
-	
-	
+
 }
