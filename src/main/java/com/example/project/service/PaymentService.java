@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class PaymentService {
@@ -25,8 +24,6 @@ public class PaymentService {
     @Autowired
     private OrderService orderService;
 
-    private final Random random = new Random();
-
     @Transactional
     public Long generateOrderId() {
         Optional<Payment> lastPayment = paymentRepository.findTopByOrderByOrderIdDesc();
@@ -35,18 +32,17 @@ public class PaymentService {
 
     @Transactional
     public Payment processPayment(Payment payment) {
-        if ("CARD".equals(payment.getPaymentMethod().toString())) {
-            if (payment.getCardNumber() == null || payment.getCardNumber().length() != 16 ||
-                payment.getCvv() == null || payment.getCvv().length() != 3) {
-                throw new IllegalArgumentException("Invalid card details");
-            }
-        } else if (Payment.PaymentMethod.UPI.equals(payment.getPaymentMethod())) {
-            if (payment.getUpiId() == null || !payment.getUpiId().contains("@")) {
-                throw new IllegalArgumentException("Invalid UPI ID");
-            }
-        } else {
-            throw new IllegalArgumentException("Unsupported payment method");
+        // Validate card details (only card payment is supported now)
+        if (payment.getCardNumber() == null || payment.getCardNumber().length() != 16) {
+            throw new IllegalArgumentException("Invalid card number. Please enter a 16-digit card number.");
         }
+
+        if (payment.getCvv() == null || payment.getCvv().length() != 3) {
+            throw new IllegalArgumentException("Invalid CVV. Please enter a 3-digit CVV.");
+        }
+
+        // Ensure payment method is set to CARD
+        payment.setPaymentMethod(Payment.PaymentMethod.CARD);
 
         // Save payment
         Payment savedPayment = paymentRepository.save(payment);

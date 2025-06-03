@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="_csrf" content="${_csrf.token}">
-<meta name="_csrf_header" content="${_csrf.headerName}">
+    <meta name="_csrf" content="${_csrf.token}">
+    <meta name="_csrf_header" content="${_csrf.headerName}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Payment</title>
@@ -54,10 +54,10 @@
             right: 0;
             bottom: 0;
             background:
-                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 99, 132, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(54, 162, 235, 0.2) 0%, transparent 50%),
-                linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f4ff 100%);
+                    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 99, 132, 0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 80%, rgba(54, 162, 235, 0.2) 0%, transparent 50%),
+                    linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f4ff 100%);
             animation: float 20s ease-in-out infinite;
             z-index: -2;
         }
@@ -70,8 +70,8 @@
             right: 0;
             bottom: 0;
             background-image:
-                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+                    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+                    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
             background-size: 50px 50px, 80px 80px;
             opacity: 0.4;
             z-index: -1;
@@ -100,8 +100,8 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
-            transform: translateX(-50px); /* Initial state for animation */
-            opacity: 0; /* Initial state for animation */
+            transform: translateX(-50px);
+            opacity: 0;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -136,7 +136,7 @@
             font-size: 0.875rem;
         }
 
-        .form-control, .form-select {
+        .form-control {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 1px solid var(--border-color);
@@ -149,7 +149,7 @@
             outline: none;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus {
             border-color: var(--border-focus);
             box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
             background: rgba(255, 255, 255, 0.95);
@@ -160,9 +160,9 @@
         }
 
         .form-control-plaintext {
-            color: var(--text-primary) !important; /* Ensure plain text is primary color */
-            padding-top: 0.75rem; /* Match padding of input fields */
-            padding-bottom: 0.75rem; /* Match padding of input fields */
+            color: var(--text-primary) !important;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
         }
 
         .btn-primary {
@@ -213,11 +213,7 @@
             box-shadow: none;
         }
 
-        .hidden {
-            display: none !important;
-        }
-
-        #paymentResponse, #statusResponse {
+        #paymentResponse {
             margin-top: 20px;
         }
 
@@ -238,7 +234,7 @@
         }
 
         .alert-success::before {
-            content: "✓"; /* Checkmark icon */
+            content: "✓";
             font-size: 1rem;
         }
 
@@ -257,298 +253,254 @@
             gap: 0.5rem;
             backdrop-filter: blur(5px);
         }
+
         .alert-danger::before {
-            content: "⚠"; /* Warning icon */
+            content: "⚠";
             font-size: 1rem;
         }
 
-        /* Styles for the G-Pay modal */
-        #gpayRedirectModal .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            color: var(--text-primary);
-            border: 1px solid rgba(226, 232, 240, 0.5);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
+        .card-row {
+            display: flex;
+            gap: 1rem;
         }
-        #gpayRedirectModal .modal-header,
-        #gpayRedirectModal .modal-footer {
-            border-color: var(--border-color);
+
+        .card-row .form-group {
+            flex: 1;
         }
-        #gpayRedirectModal .modal-title {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-        #gpayRedirectModal .btn-close {
-            background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
-            opacity: .5;
-        }
-        #gpayRedirectModal .modal-body {
-            color: var(--text-secondary);
-        }
-        #gpayRedirectModal .spinner-border {
-            color: var(--primary-color) !important;
+
+        .card-row .form-group:first-child {
+            flex: 2;
         }
     </style>
 </head>
 <body>
-    <div class="payment-container" id="paymentContainer">
-        <h3 class="text-center mb-4">Make a Payment</h3>
-        <form  id="paymentForm" >
-            <input type="hidden" id="orderId" name="orderId" value="<#if orderId??>${orderId}</#if>">
-            <div class="mb-3">
-                <label for="amount" class="form-label">Amount (INR)</label>
-                <div id="productInfo" data-price="${totalAmount!0}">
-                    <p class="form-control-plaintext">₹${totalAmount!0}</p>
-                </div>
-            </div>
+<div class="payment-container" id="paymentContainer">
+    <h3 class="text-center mb-4">Make a Payment</h3>
+    <form id="paymentForm">
+        <input type="hidden" id="orderId" name="orderId" value="<#if orderId??>${orderId}</#if>">
 
-            <div class="mb-3">
-                <label for="address" class="form-label">Shipping Address</label>
-                <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your full shipping address, including street, city, state, and zip code." required></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label for="phoneNumber" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="e.g., 9876543210" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" maxlength="10" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="paymentMethod" class="form-label">Payment Method</label>
-                <select class="form-select" id="paymentMethod" name="paymentMethod" onchange="togglePaymentFields(this.value)">
-                    <option value="CARD">Card</option>
-                    <option value="UPI">UPI</option>
-                </select>
-            </div>
-
-            <div id="cardFields">
-                <div class="mb-3">
-                    <label for="cardNumber" class="form-label">Card Number</label>
-                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" maxlength="16" placeholder="16-digit card number">
-                </div>
-                <div class="mb-3">
-                    <label for="cvv" class="form-label">CVV</label>
-                    <input type="text" class="form-control" id="cvv" name="cvv" maxlength="3" placeholder="3-digit CVV">
-                </div>
-            </div>
-
-            <div id="upiFields" class="hidden">
-                <div class="mb-3">
-                    <label for="upiId" class="form-label">UPI ID</label>
-                    <input type="text" class="form-control" id="upiId" name="upiId" placeholder="e.g., user@upi">
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100">Confirm Payment</button>
-        </form>
-
-        <div id="paymentResponse"></div>
-    </div>
-
-    <div class="modal fade" id="gpayRedirectModal" tabindex="-1" aria-labelledby="gpayRedirectModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="gpayRedirectModalLabel">Redirecting for Payment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>You are being redirected to G-Pay to complete your payment.</p>
-                    <p>Please do not close this window.</p>
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount (INR)</label>
+            <div id="productInfo" data-price="${totalAmount!0}">
+                <p class="form-control-plaintext">₹${totalAmount!0}</p>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Function to toggle payment fields using CSS classes
-        function togglePaymentFields(paymentMethod) {
-            console.log("Payment method changed to: " + paymentMethod);
+        <div class="mb-3">
+            <label for="address" class="form-label">Shipping Address</label>
+            <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your full shipping address, including street, city, state, and zip code." required></textarea>
+        </div>
 
-            var cardFields = document.getElementById('cardFields');
-            var upiFields = document.getElementById('upiFields');
-            var cardNumberInput = document.getElementById('cardNumber');
-            var cvvInput = document.getElementById('cvv');
-            var upiIdInput = document.getElementById('upiId');
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="e.g., 9876543210" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" maxlength="10" required>
+        </div>
 
-            if (paymentMethod === 'CARD') {
-                cardFields.classList.remove('hidden');
-                upiFields.classList.add('hidden');
+        <div class="mb-3">
+            <label class="form-label">Payment Method</label>
+            <p class="form-control-plaintext">Card Payment</p>
+        </div>
 
-                cardNumberInput.required = true;
-                cvvInput.required = true;
+        <div class="mb-3">
+            <label for="cardNumber" class="form-label">Card Number</label>
+            <input type="text" class="form-control" id="cardNumber" name="cardNumber" maxlength="16" placeholder="16-digit card number" required>
+        </div>
 
-                upiIdInput.required = false;
-                upiIdInput.value = '';
+        <div class="card-row mb-3">
+            <div class="form-group">
+                <label for="expiryDate" class="form-label">Expiry Date</label>
+                <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv" class="form-label">CVV</label>
+                <input type="text" class="form-control" id="cvv" name="cvv" maxlength="3" placeholder="3-digit CVV" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Confirm Payment</button>
+    </form>
+
+    <div id="paymentResponse"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Initial setup when page loads
+    window.onload = function() {
+        // Add 'show' class to payment container for animation
+        document.getElementById('paymentContainer').classList.add('show');
+
+        // Get input elements
+        const phoneNumberInput = document.getElementById('phoneNumber');
+        const cardNumberInput = document.getElementById('cardNumber');
+        const cvvInput = document.getElementById('cvv');
+        const expiryDateInput = document.getElementById('expiryDate');
+
+        // Function to restrict input to numeric values only
+        function restrictToNumeric(event) {
+            // Allow backspace, delete, tab, escape, enter, and arrow keys
+            if ([8, 9, 27, 13, 37, 38, 39, 40, 46].indexOf(event.keyCode) !== -1 ||
+                // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                (event.keyCode === 65 && (event.ctrlKey === true || event.metaKey === true)) ||
+                (event.keyCode === 67 && (event.ctrlKey === true || event.metaKey === true)) ||
+                (event.keyCode === 86 && (event.ctrlKey === true || event.metaKey === true)) ||
+                (event.keyCode === 88 && (event.ctrlKey === true || event.metaKey === true))) {
+                return;
             }
-            else if (paymentMethod === 'UPI') {
-                cardFields.classList.add('hidden');
-                upiFields.classList.remove('hidden');
-
-                upiIdInput.required = true;
-
-                cardNumberInput.required = false;
-                cardNumberInput.value = '';
-                cvvInput.required = false;
-                cvvInput.value = '';
+            // Ensure that it is a number and stop the keypress
+            if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                event.preventDefault();
             }
         }
 
-        // Initial setup when page loads
-        window.onload = function() {
-            // Add 'show' class to payment container for animation
-            document.getElementById('paymentContainer').classList.add('show');
+        // Function to remove non-numeric characters on input (e.g., paste)
+        function cleanNonNumeric(event) {
+            this.value = this.value.replace(/\D/g, '');
+        }
 
-            // Set initial state
-            togglePaymentFields(document.getElementById('paymentMethod').value);
+        // Function to format expiry date
+        function formatExpiryDate(event) {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            this.value = value;
+        }
 
-            // Get the phone number input element
-            const phoneNumberInput = document.getElementById('phoneNumber');
-            const cardNumberInput = document.getElementById('cardNumber');
-            const cvvInput = document.getElementById('cvv');
+        // Event listeners for phone number
+        phoneNumberInput.addEventListener('keydown', restrictToNumeric);
+        phoneNumberInput.addEventListener('input', cleanNonNumeric);
 
-            // Function to restrict input to numeric values only
-            function restrictToNumeric(event) {
-                // Allow backspace, delete, tab, escape, enter, and arrow keys
-                if ([8, 9, 27, 13, 37, 38, 39, 40, 46].indexOf(event.keyCode) !== -1 ||
-                    // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-                    (event.keyCode === 65 && (event.ctrlKey === true || event.metaKey === true)) || // Ctrl+A
-                    (event.keyCode === 67 && (event.ctrlKey === true || event.metaKey === true)) || // Ctrl+C
-                    (event.keyCode === 86 && (event.ctrlKey === true || event.metaKey === true)) || // Ctrl+V
-                    (event.keyCode === 88 && (event.ctrlKey === true || event.metaKey === true))) { // Ctrl+X
-                    return;
-                }
-                // Ensure that it is a number and stop the keypress
-                if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
-                    event.preventDefault();
-                }
+        // Event listeners for card number
+        cardNumberInput.addEventListener('keydown', restrictToNumeric);
+        cardNumberInput.addEventListener('input', cleanNonNumeric);
+
+        // Event listeners for CVV
+        cvvInput.addEventListener('keydown', restrictToNumeric);
+        cvvInput.addEventListener('input', cleanNonNumeric);
+
+        // Event listeners for expiry date
+        expiryDateInput.addEventListener('keydown', restrictToNumeric);
+        expiryDateInput.addEventListener('input', formatExpiryDate);
+
+        // Set up form submission
+        document.getElementById('paymentForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const orderId = document.getElementById('orderId').value;
+            const address = document.getElementById('address').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const amount = parseFloat(document.getElementById('productInfo').dataset.price) * 1000;
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cvv = document.getElementById('cvv').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+
+            // Basic validation
+            if (cardNumber.length !== 16) {
+                document.getElementById('paymentResponse').innerHTML =
+                    '<div class="alert alert-danger mt-3">' +
+                    '<strong>Error:</strong> Please enter a valid 16-digit card number.</div>';
+                return;
             }
 
-            // Function to remove non-numeric characters on input (e.g., paste)
-            function cleanNonNumeric(event) {
-                this.value = this.value.replace(/\D/g, '');
+            if (cvv.length !== 3) {
+                document.getElementById('paymentResponse').innerHTML =
+                    '<div class="alert alert-danger mt-3">' +
+                    '<strong>Error:</strong> Please enter a valid 3-digit CVV.</div>';
+                return;
             }
 
-            // Event listeners for phone number
-            phoneNumberInput.addEventListener('keydown', restrictToNumeric);
-            phoneNumberInput.addEventListener('input', cleanNonNumeric);
+            if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+                document.getElementById('paymentResponse').innerHTML =
+                    '<div class="alert alert-danger mt-3">' +
+                    '<strong>Error:</strong> Please enter expiry date in MM/YY format.</div>';
+                return;
+            }
 
-            // Event listeners for card number
-            cardNumberInput.addEventListener('keydown', restrictToNumeric);
-            cardNumberInput.addEventListener('input', cleanNonNumeric);
+            const paymentData = {
+                orderId: orderId ? parseInt(orderId) : null,
+                amount: amount,
+                paymentMethod: "CARD",
+                paymentStatus: "PENDING",
+                cardNumber: cardNumber,
+                cvv: cvv,
+                upiId: ""
+            };
 
-            // Event listeners for CVV
-            cvvInput.addEventListener('keydown', restrictToNumeric);
-            cvvInput.addEventListener('input', cleanNonNumeric);
+            const customerDetails = {
+                address: address,
+                phoneNumber: phoneNumber
+            };
 
+            // Get CSRF token properly
+            const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+            const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
 
-            // Set up form submission
-            document.getElementById('paymentForm').addEventListener('submit', async function(event) {
-                event.preventDefault();
+            const paymentAttributes = {
+                customerDetails: customerDetails,
+                payment: paymentData
+            };
 
-                const orderId = document.getElementById('orderId').value;
-                const address = document.getElementById('address').value;
-                const phoneNumber = document.getElementById('phoneNumber').value;
-                const amount = parseFloat(document.getElementById('productInfo').dataset.price) * 1000;
-                const paymentMethodString = document.getElementById('paymentMethod').value;
+            console.log(paymentAttributes);
 
-                const paymentData = {
-                    orderId: orderId ? parseInt(orderId) : null,
-                    amount: amount,
-                    paymentMethod: paymentMethodString,
-                    paymentStatus: "PENDING"
+            const submitButton = document.querySelector('.btn-primary');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
+
+            try {
+                const headers = {
+                    'Content-Type': 'application/json'
                 };
 
-                const customerDetails = {
-                    address: address,
-                    phoneNumber: phoneNumber
-                };
-
-                if (paymentMethodString === 'CARD') {
-                    paymentData.cardNumber = document.getElementById('cardNumber').value;
-                    paymentData.cvv = document.getElementById('cvv').value;
-                    paymentData.upiId = "";
-                } else if (paymentMethodString === 'UPI') {
-                    paymentData.upiId = document.getElementById('upiId').value;
-                    paymentData.cardNumber = "";
-                    paymentData.cvv = "";
+                // Add CSRF header if available
+                if (csrfHeader && csrfToken) {
+                    headers[csrfHeader] = csrfToken;
                 }
 
-                const csrfToken=document.querySelector('meta[name="_csrf"]').getAttribute("content");
-                const csrfHeader=document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+                const response = await fetch('/payments/process', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(paymentAttributes)
+                });
 
-                const paymentAttributes = {
-                    customerDetails:customerDetails,
-                    payment:paymentData
-                };
-                console.log(paymentAttributes);
+                console.log("Response status:", response.status);
 
-                const submitButton = document.querySelector('.btn-primary');
-                submitButton.disabled = true; // Disable button on submit
-                submitButton.classList.add('loading'); // Add loading indicator class
-
-
-                try {
-                    const response = await fetch('/payments/process', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',[csrfHeader]:csrfToken
-                        },
-                        body: JSON.stringify(paymentAttributes)
-                    });
-
-                    console.log("Response status:", response.status);
-
-                    if (!response.ok) {
-                        let errorMessage = "Payment failed";
-                        try {
-                            const errorJson = await response.json();
-                            console.log("Error response:", errorJson);
-                            errorMessage = errorJson.message || "Invalid input data.";
-                        } catch (e) {
-                            console.log("Could not parse error response as JSON");
-                            errorMessage = response.statusText || errorMessage;
-                        }
-                        throw new Error(errorMessage);
+                if (!response.ok) {
+                    let errorMessage = "Payment failed";
+                    try {
+                        const errorJson = await response.json();
+                        console.log("Error response:", errorJson);
+                        errorMessage = errorJson.message || "Invalid input data.";
+                    } catch (e) {
+                        console.log("Could not parse error response as JSON");
+                        errorMessage = response.statusText || errorMessage;
                     }
-
-                    const result = await response.json();
-                    console.log("Payment successful:", result);
-
-                    if (paymentMethodString === 'UPI') {
-                        const gpayModal = new bootstrap.Modal(document.getElementById('gpayRedirectModal'));
-                        gpayModal.show();
-
-                        setTimeout(() => {
-                            gpayModal.hide();
-                            window.location.href = "/products";
-                        }, 3000);
-                    } else {
-                        document.getElementById('paymentResponse').innerHTML =
-                            '<div class="alert alert-success mt-3">' +
-                            '<strong>Success!</strong> Payment ID: ' + result.paymentId +
-                            ', Status: ' + result.paymentStatus + '</div>';
-                        setTimeout(()=>{
-                            window.location.href="/orders/my";
-                        }, 3000);
-                    }
-
-                } catch (error) {
-                    console.error("Payment error:", error);
-                    document.getElementById('paymentResponse').innerHTML =
-                        '<div class="alert alert-danger mt-3">' +
-                        '<strong>Error:</strong> ' + error.message + '</div>';
-                    console.error("Full error details:", error);
-                } finally {
-                    submitButton.disabled = false; // Re-enable button
-                    submitButton.classList.remove('loading'); // Remove loading indicator
+                    throw new Error(errorMessage);
                 }
-            });
-        };
-    </script>
+
+                const result = await response.json();
+                console.log("Payment successful:", result);
+
+                document.getElementById('paymentResponse').innerHTML =
+                    '<div class="alert alert-success mt-3">' +
+                    '<strong>Success!</strong> Payment ID: ' + result.paymentId +
+                    ', Status: ' + result.paymentStatus + '</div>';
+
+                setTimeout(() => {
+                    window.location.href = "/orders/my";
+                }, 1000);
+
+            } catch (error) {
+                console.error("Payment error:", error);
+                document.getElementById('paymentResponse').innerHTML =
+                    '<div class="alert alert-danger mt-3">' +
+                    '<strong>Error:</strong> ' + error.message + '</div>';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Confirm Payment';
+            }
+        });
+    };
+</script>
 </body>
 </html>

@@ -567,6 +567,12 @@
     <div class="navbar-section">
         <div class="navbar-links">
             <a href="/profile"><i class="fas fa-user-circle"></i> Profile</a>
+            <a href="/cart/details">
+                                        <i class="fas fa-shopping-cart"></i> Cart
+                                        <#if cartItemCount?? && (cartItemCount?is_number && cartItemCount > 0)>
+                                            (<span>${cartItemCount}</span>)
+                                        </#if>
+            </a>
             <form action="/logout" method="post" class="logout-form">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <button type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="_csrf" content="${_csrf.token}">
-<meta name="_csrf_header" content="${_csrf.headerName}">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Payment</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Product - Emporia</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -33,13 +30,17 @@
             --radius-lg: 0.75rem;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
-            flex-direction: column; /* Changed to column to accommodate navbar */
+            flex-direction: column;
             color: var(--text-primary);
             line-height: 1.6;
             position: relative;
@@ -47,6 +48,7 @@
             overflow-x: hidden;
         }
 
+        /* Animated Background */
         body::before {
             content: '';
             position: fixed;
@@ -148,7 +150,7 @@
         }
 
         .search-container {
-            display: none; /* Hidden on this specific product page for simplicity as per previous request */
+            display: none;
         }
 
         .navbar-links {
@@ -204,7 +206,7 @@
 
         /* Enhanced Main Content Styling */
         .container {
-            flex: 1; /* Allow container to take remaining vertical space */
+            flex: 1;
             display: flex;
             padding: 3.5rem;
             gap: 3rem;
@@ -344,10 +346,9 @@
             flex-wrap: wrap;
         }
 
-        /* Re-using and adapting .btn-action styles for product page buttons */
-        .btn-action {
+        .product-details button {
             padding: 1rem 2rem;
-            font-size: 0.95rem; /* Adjusted from 1.05rem */
+            font-size: 1.05rem;
             border: none;
             border-radius: var(--radius-md);
             cursor: pointer;
@@ -360,13 +361,10 @@
             max-width: 200px;
             text-transform: uppercase;
             letter-spacing: 0.025em;
-            display: inline-flex; /* Ensure flex for icon alignment */
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem; /* Space between icon and text */
+            font-size: 0.95rem;
         }
 
-        .btn-action::before {
+        .product-details button::before {
             content: '';
             position: absolute;
             top: 0;
@@ -377,17 +375,8 @@
             transition: left 0.5s;
         }
 
-        .btn-action:hover::before {
+        .product-details button:hover::before {
             left: 100%;
-        }
-
-        .btn-action:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Generic hover shadow */
-        }
-
-        .btn-action:active {
-            transform: translateY(0);
         }
 
         .buy-now {
@@ -400,9 +389,14 @@
 
         .buy-now:hover {
             background: var(--primary-hover);
+            transform: translateY(-2px);
             box-shadow:
                 0 8px 20px rgba(37, 99, 235, 0.3),
                 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .buy-now:active {
+            transform: translateY(0);
         }
 
         .add-to-cart {
@@ -415,11 +409,15 @@
 
         .add-to-cart:hover {
             background: #047857;
+            transform: translateY(-2px);
             box-shadow:
                 0 8px 20px rgba(5, 150, 105, 0.3),
                 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .add-to-cart:active {
+            transform: translateY(0);
+        }
 
         .description {
             margin-top: 1rem;
@@ -511,7 +509,7 @@
             .price {
                 font-size: 1.5rem;
             }
-            .btn-action { /* Apply to all buttons now */
+            .product-details button {
                 padding: 0.7rem 1.4rem;
                 font-size: 0.95rem;
             }
@@ -529,7 +527,7 @@
             .product-image img {
                 max-height: 250px;
             }
-            .btn-action { /* Apply to all buttons now */
+            .product-details button {
                 width: 100%;
                 max-width: none;
             }
@@ -547,7 +545,7 @@
         <a href="/" class="brand">Emporia</a>
     </div>
     <div class="navbar-section">
-        <form action="/products" method="get" class="search-container">
+        <form action="/products" method="get" class="search-container" style="display: none;">
             <input type="text" name="query" placeholder="Search for products..." value="${query!}" />
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
@@ -591,17 +589,13 @@
                     <input type="hidden" name="productId" value="${productObj.productId}" />
                     <input type="hidden" name="userId" value="${userId}" />
                     <input type="hidden" name="quantity" id="buyQuantity" />
-                    <button type="submit" class="btn-action buy-now" onclick="document.getElementById('buyQuantity').value=document.getElementById('quantity').value">
-                        <i class="fas fa-money-bill-wave"></i> Buy Now
-                    </button>
+                    <button type="submit" class="buy-now" onclick="document.getElementById('buyQuantity').value=document.getElementById('quantity').value">Buy Now</button>
                 </form>
                 <form action="/cart/add" method="post" style="display:inline;">
                     <input type="hidden" name="productId" value="${productObj.productId}" />
                     <input type="hidden" name="quantity" id="cartQuantity" value="1" />
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <button type="submit" class="btn-action add-to-cart" onclick="document.getElementById('cartQuantity').value=document.getElementById('quantity').value">
-                        <i class="fas fa-cart-plus"></i> Add to Cart
-                    </button>
+                    <button type="submit" class="add-to-cart" onclick="document.getElementById('cartQuantity').value=document.getElementById('quantity').value">Add to Cart</button>
                 </form>
             </div>
 
@@ -614,6 +608,5 @@
 <#else>
     <p class="no-products-message">Product not found</p>
 </#if>
-
 </body>
 </html>

@@ -35,10 +35,10 @@ public class PaymentController {
 
     @GetMapping("/payment")
     public String showPaymentForm(Model model,
-                                   @RequestParam Integer productId,
-                                   @RequestParam Integer userId,
-                                   @RequestParam Integer quantity     
-                                   ) {
+                                  @RequestParam Integer productId,
+                                  @RequestParam Integer userId,
+                                  @RequestParam Integer quantity
+    ) {
 
         Optional<Product> productOpt = productService.getProductDetails(productId);
         if (productOpt.isPresent()) {
@@ -49,7 +49,9 @@ public class PaymentController {
             order.setUserId(userId);
             order.setOrderDate(LocalDateTime.now());
             order.setStatus(OrderStatus.PENDING);
-       
+            order.setProductId(productId);
+            order.setQuantity(quantity);
+
             double totalAmount=product.getPrice() * quantity;
             order.setTotalAmount(totalAmount);
 
@@ -65,19 +67,19 @@ public class PaymentController {
     @ResponseBody
     public ResponseEntity<Payment> processPayment(@RequestBody PaymentDetails paymentAttributes) {
         try {
-        	Payment paymentData = paymentAttributes.getPayment();
-        	System.out.println(paymentAttributes);
+            Payment paymentData = paymentAttributes.getPayment();
+            System.out.println(paymentAttributes);
             CustomerDetails customerDetails = paymentAttributes.getCustomerDetails();
-            
+
             paymentData.setPaymentStatus(PaymentStatus.COMPLETED);
             Payment savedPayment = paymentService.processPayment(paymentData);
-            
+
             Optional<Order> order = orderService.getOrderDetails(paymentData.getOrderId());
             Order orderData = order.get();
-            
+
             orderData.setAddress(customerDetails.getAddress());
             orderData.setPhoneNumber(customerDetails.getPhoneNumber());
-            
+
             Order savedOrder = orderService.createOrder(orderData);
             return ResponseEntity.ok(savedPayment);
         } catch (IllegalArgumentException e) {

@@ -1,9 +1,6 @@
 package com.example.project.model;
 
-
 import jakarta.persistence.*;
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,41 +10,42 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
-    
+
     @Column(unique = true)
     private Long orderId;
 
     @Column
     private double amount;
-    
 
     private String cardNumber;
     private String cvv;
-    private String upiId;
 
-    public enum PaymentMethod{
-        CARD,UPI
+    // Removed UPI enum option
+    public enum PaymentMethod {
+        CARD
     }
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
-
-    public enum PaymentStatus{
-        PENDING,COMPLETED,FAILED
+    public enum PaymentStatus {
+        PENDING, COMPLETED, FAILED
     }
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     private LocalDateTime paymentDate;
-    
+    private Integer productId;
+    private Integer quantity;
+
     @PrePersist
     protected void onCreate() {
-    	paymentDate = LocalDateTime.now();
+        paymentDate = LocalDateTime.now();
     }
 
     public Payment() {
+        this.paymentMethod = PaymentMethod.CARD; // Default to CARD
         this.paymentStatus = PaymentStatus.PENDING;
         this.paymentDate = LocalDateTime.now();
     }
@@ -61,6 +59,7 @@ public class Payment {
         this.paymentDate = LocalDateTime.now();
     }
 
+    // Getters and Setters
     public Long getPaymentId() {
         return paymentId;
     }
@@ -101,14 +100,6 @@ public class Payment {
         this.cvv = cvv;
     }
 
-    public String getUpiId() {
-        return upiId;
-    }
-
-    public void setUpiId(String upiId) {
-        this.upiId = upiId;
-    }
-
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
@@ -132,6 +123,20 @@ public class Payment {
     public void setPaymentDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;
     }
-    
-    
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }
