@@ -325,29 +325,23 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Initial setup when page loads
     window.onload = function() {
-        // Add 'show' class to payment container for animation
         document.getElementById('paymentContainer').classList.add('show');
 
-        // Get input elements
         const phoneNumberInput = document.getElementById('phoneNumber');
         const cardNumberInput = document.getElementById('cardNumber');
         const cvvInput = document.getElementById('cvv');
         const expiryDateInput = document.getElementById('expiryDate');
+        const paymentResponseDiv = document.getElementById('paymentResponse');
 
-        // Function to restrict input to numeric values only
         function restrictToNumeric(event) {
-            // Allow backspace, delete, tab, escape, enter, and arrow keys
             if ([8, 9, 27, 13, 37, 38, 39, 40, 46].indexOf(event.keyCode) !== -1 ||
-                // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
                 (event.keyCode === 65 && (event.ctrlKey === true || event.metaKey === true)) ||
                 (event.keyCode === 67 && (event.ctrlKey === true || event.metaKey === true)) ||
                 (event.keyCode === 86 && (event.ctrlKey === true || event.metaKey === true)) ||
                 (event.keyCode === 88 && (event.ctrlKey === true || event.metaKey === true))) {
                 return;
             }
-            // Ensure that it is a number and stop the keypress
             if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
                 event.preventDefault();
             }
@@ -358,7 +352,7 @@
             this.value = this.value.replace(/\D/g, '');
         }
 
-        // Function to format expiry date
+        // Function to format expiry date and add basic validation
         function formatExpiryDate(event) {
             let value = this.value.replace(/\D/g, '');
             if (value.length >= 2) {
@@ -383,9 +377,12 @@
         expiryDateInput.addEventListener('keydown', restrictToNumeric);
         expiryDateInput.addEventListener('input', formatExpiryDate);
 
-        // Set up form submission
+
+        // --- Form Submission and Validation ---
         document.getElementById('paymentForm').addEventListener('submit', async function(event) {
             event.preventDefault();
+
+            paymentResponseDiv.innerHTML = ''; // Clear previous messages
 
             const orderId = document.getElementById('orderId').value;
             const address = document.getElementById('address').value;
@@ -397,25 +394,52 @@
 
             // Basic validation
             if (cardNumber.length !== 16) {
-                document.getElementById('paymentResponse').innerHTML =
+                paymentResponseDiv.innerHTML =
                     '<div class="alert alert-danger mt-3">' +
                     '<strong>Error:</strong> Please enter a valid 16-digit card number.</div>';
                 return;
             }
 
             if (cvv.length !== 3) {
-                document.getElementById('paymentResponse').innerHTML =
+                paymentResponseDiv.innerHTML =
                     '<div class="alert alert-danger mt-3">' +
                     '<strong>Error:</strong> Please enter a valid 3-digit CVV.</div>';
                 return;
             }
 
+            // --- Expiry Date Validation ---
             if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
-                document.getElementById('paymentResponse').innerHTML =
+                paymentResponseDiv.innerHTML =
                     '<div class="alert alert-danger mt-3">' +
                     '<strong>Error:</strong> Please enter expiry date in MM/YY format.</div>';
                 return;
             }
+
+            const [expMonth, expYear] = expiryDate.split('/').map(Number);
+            const currentYear = new Date().getFullYear() % 100;
+            const currentMonth = new Date().getMonth() + 1;
+
+            if (expMonth < 1 || expMonth > 12) {
+                paymentResponseDiv.innerHTML =
+                    '<div class="alert alert-danger mt-3">' +
+                    '<strong>Error:</strong> Expiry month must be between 01 and 12.</div>';
+                return;
+            }
+
+            if (expYear < currentYear || (expYear === currentYear && expMonth < currentMonth)) {
+                paymentResponseDiv.innerHTML =
+                    '<div class="alert alert-danger mt-3">' +
+                    '<strong>Error:</strong> Card has expired. Please enter a valid expiry date.</div>';
+                return;
+            }
+
+            if (expYear === currentYear && expMonth === currentMonth -1) {
+                paymentResponseDiv.innerHTML =
+                    '<div class="alert alert-danger mt-3">' +
+                    '<strong>Error:</strong> Card is about to expire. Please use a card with a later expiry date.</div>';
+                return;
+            }
+
 
             const paymentData = {
                 orderId: orderId ? parseInt(orderId) : null,
@@ -481,7 +505,7 @@
                 const result = await response.json();
                 console.log("Payment successful:", result);
 
-                document.getElementById('paymentResponse').innerHTML =
+                paymentResponseDiv.innerHTML =
                     '<div class="alert alert-success mt-3">' +
                     '<strong>Success!</strong> Payment ID: ' + result.paymentId +
                     ', Status: ' + result.paymentStatus + '</div>';
@@ -492,7 +516,7 @@
 
             } catch (error) {
                 console.error("Payment error:", error);
-                document.getElementById('paymentResponse').innerHTML =
+                paymentResponseDiv.innerHTML =
                     '<div class="alert alert-danger mt-3">' +
                     '<strong>Error:</strong> ' + error.message + '</div>';
             } finally {

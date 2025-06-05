@@ -1,4 +1,3 @@
-// Enhanced PaymentService.java with debugging
 package com.example.project.service;
 
 import com.example.project.model.Order;
@@ -46,7 +45,6 @@ public class PaymentService {
                 payment.getOrderId(), payment.getAmount(),
                 payment.getCardNumber() != null ? payment.getCardNumber().substring(0, 4) + "****" : "null");
 
-        // First validate all inputs
         validatePaymentInput(payment);
 
         // Clean and format card data
@@ -55,7 +53,6 @@ public class PaymentService {
         payment.setCardNumber(cardNumber);
         payment.setCvv(cvv);
 
-        // DEBUG: Log what we're searching for
         logger.info("DEBUG: Searching for card - CardNumber: {}, CVV: {}",
                 cardNumber.substring(0, 4) + "****", cvv);
 

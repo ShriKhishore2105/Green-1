@@ -476,7 +476,7 @@
                 </div>
                 <div class="form-group">
                     <label for="categoryId">Category:</label>
-                    <select name="categoryId" id="categoryId" class="form-control" disabled>
+                    <select name="categoryId" id="categoryId" class="form-control">
                         <option value="">-- Select Category --</option>
                         <#list categories as entry>
                             <option value="${entry.key}"
